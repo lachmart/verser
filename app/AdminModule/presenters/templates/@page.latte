@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="cs">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Lab katalog - Administrace</title>
+
+		<link href="//fonts.googleapis.com/css?family=Roboto+Condensed:300,400" rel="stylesheet" type="text/css">
+		<link href="//fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet" type="text/css">
+
+		<link rel="stylesheet" type="text/css" href="{$basePath}/admin-theme/lib/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="{$basePath}/admin-theme/lib/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="{$basePath}/admin-theme/lib/css/animate.min.css">
+		<link rel="stylesheet" type="text/css" href="{$basePath}/admin-theme/lib/css/bootstrap-switch.min.css">
+		<link rel="stylesheet" type="text/css" href="{$basePath}/admin-theme/lib/css/checkbox3.min.css">
+		<link rel="stylesheet" type="text/css" href="{$basePath}/admin-theme/lib/css/jquery.dataTables.min.css">
+		<link rel="stylesheet" type="text/css" href="{$basePath}/admin-theme/lib/css/dataTables.bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="{$basePath}/admin-theme/lib/css/select2.min.css">
+
+		<link rel="stylesheet" type="text/css" href="{$basePath}/admin-theme/css/style.css">
+		<link rel="stylesheet" type="text/css" href="{$basePath}/admin-theme/css/themes/flat-blue.css">
+		<link rel="stylesheet" type="text/css" href="{$basePath}/admin-theme/css/AdminLTE.css">
+		<link rel="stylesheet" type="text/css" href="{$basePath}/admin-theme/css/krecek5.css">
+
+		<script type="text/javascript" src="{$basePath}/admin-theme/lib/js/jquery.min.js"></script>
+		<script type="text/javascript" src="{$basePath}/admin-theme/lib/js/jquery-ui.min.js"></script>
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		{* PHOTO GALLERY - BLUE IMP *}
+		<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/admin-theme/css/blueimp-gallery.min.css">
+		<script src="{$basePath}/admin-theme/js/jquery.blueimp-gallery.min.js"></script>
+		{* WYSIWYG text editor *}
+		<script type="text/javascript" src="{$basePath}/inc/ckeditor/ckeditor.js"></script>
+
+		{* lang switcher *}
+		<link rel="stylesheet" type="text/css" href="{$basePath}/admin-theme/css/languages.css">
+
+	</head>
+	<body class="flat-blue">
+
+		<div class="app-container">
+			<div class="row content-container">
+				{include 'menuTop.latte'}
+				{include 'menuLeft.latte'}
+
+				{* Main Content *}
+				<div class="container-fluid">
+					<div class="side-body">
+						<div class="card">
+							<div class="card-header">
+								{ifset #h1block}
+									<span class="pull-right">
+										{include #h1block}
+									</span>
+								{/ifset}
+								{if isset($pageTitle)}
+									<div class="card-title">
+										<div class="title">{$pageTitle|noescape}</div>
+									</div>
+								{/if}
+							</div>
+							<div class="card-body">
+								{ifset #content}
+									{include content}
+								{/ifset}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<br />
+			<footer class="app-footer">
+			    <div class="wrapper text-bold" style="border-top: #CFCFCF solid 3px; padding: 5px;">
+					<span class="pull-left"> Licence: {$projectCustomer} | ID: {$projectLicence} </span>
+					<span class="pull-right">i-LABMET Admin {$Krecek5Version} © 2015{if date('Y') > 2015}&ndash;{date('Y') }{/if}</span>
+				</div>
+			</footer>
+
+		</div>
+
+		<script type="text/javascript" src="{$basePath}/admin-theme/lib/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="{$basePath}/admin-theme/lib/js/Chart.min.js"></script>
+		<script type="text/javascript" src="{$basePath}/admin-theme/lib/js/bootstrap-switch.min.js"></script>
+		<script type="text/javascript" src="{$basePath}/admin-theme/lib/js/jquery.matchHeight-min.js"></script>
+		<script type="text/javascript" src="{$basePath}/admin-theme/lib/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="{$basePath}/admin-theme/js/de_sort.js"></script>
+		<script type="text/javascript" src="{$basePath}/admin-theme/lib/js/dataTables.bootstrap.min.js"></script>
+		<script type="text/javascript" src="{$basePath}/admin-theme/lib/js/select2.full.min.js"></script>
+		<script type="text/javascript" src="{$basePath}/admin-theme/lib/js/ace/ace.js"></script>
+		<script type="text/javascript" src="{$basePath}/admin-theme/lib/js/ace/mode-html.js"></script>
+		<script type="text/javascript" src="{$basePath}/admin-theme/lib/js/ace/theme-github.js"></script>
+
+		<script type="text/javascript" src="{$basePath}/admin-theme/js/app.js"></script>
+		<script type="text/javascript" src="{$basePath}/admin-theme/js/index.js"></script>
+
+		{* datagrid - DataTables *}
+		<script type="text/javascript" src="{$basePath}/admin-theme/js/DataTables/jquery.dataTables.js"></script>
+		<script type="text/javascript" src="{$basePath}/admin-theme/js/DataTables/dataTables.bootstrap.min.js"></script>
+		<script type="text/javascript" src="{$basePath}/admin-theme/js/de_sort.js"></script>
+
+		<script src="//nette.github.io/resources/js/netteForms.min.js"></script>
+
+		{include 'confirmDelete.latte'}
+		{include 'alerts.latte'}
+            
+	</body>
+</html>

@@ -1,0 +1,19 @@
+<script>
+	$(document).on('click', '.confirm-delete', function ()
+	{
+		var _dialog = 'Přejete si položku trvale odstranit?';
+
+		var attr = $(this).attr('data-confirm-dialog');
+		if (typeof attr !== typeof undefined && attr !== false)
+		{
+			_dialog = $(this).attr('data-confirm-dialog');
+		}
+		
+
+		if (confirm(_dialog))
+		{
+			return true;
+		}
+		return false;
+	});
+</script>

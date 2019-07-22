@@ -1,0 +1,12 @@
+{* Latte template *}
+
+{block content}
+
+<div class="row">
+	<div class="col-sm-3 clearfix">
+		{include versionList.latte, versionList=>$versionList }		
+	</div>
+	<div class="col-sm-9">
+		{include versionData.latte}
+	</div>
+</div>

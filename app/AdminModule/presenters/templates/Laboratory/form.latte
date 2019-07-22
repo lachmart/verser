@@ -1,0 +1,103 @@
+
+{block content}
+
+{form form}
+	{input OLD_KOD}
+
+    <div class="row">
+		<div class="col-sm-3 text-right{if $form->getComponent('KOD')->isRequired()} required{/if}">
+			{label KOD class => 'control-label' /}
+		</div>
+		<div class="col-sm-3">
+			{input KOD class => 'form-control'}
+		</div>
+    </div>
+
+    <div class="row">
+		<div class="col-sm-3 text-right{if $form->getComponent('NAME')->isRequired()} required{/if}">
+			{label NAME class => 'control-label' /}
+		</div>
+		<div class="col-sm-6">
+			{input NAME class => 'form-control'}
+		</div>
+    </div>
+
+    <div class="row">
+		<div class="col-sm-3 text-right{if $form->getComponent('ODD')->isRequired()} required{/if}">
+			{label ODD class => 'control-label' /}
+		</div>
+		<div class="col-sm-6">
+			{input ODD class => 'form-control'}
+		</div>
+    </div>
+
+    <div class="row">
+		<div class="col-sm-3 text-right{if $form->getComponent('KONTAKT')->isRequired()} required{/if}">
+			{label KONTAKT class => 'control-label' /}
+		</div>
+		<div class="col-sm-6">
+			{input KONTAKT class => 'form-control'}
+		</div>
+    </div>
+
+    <div class="row">
+		<div class="col-sm-3 text-right{if $form->getComponent('TEL')->isRequired()} required{/if}">
+			{label TEL class => 'control-label' /}
+		</div>
+		<div class="col-sm-6">
+			{input TEL class => 'form-control'}
+		</div>
+    </div>
+
+    <div class="row">
+		<div class="col-sm-3 text-right{if $form->getComponent('EMAIL')->isRequired()} required{/if}">
+			{label EMAIL class => 'control-label' /}
+		</div>
+		<div class="col-sm-6">
+			{input EMAIL class => 'form-control'}
+		</div>
+    </div>
+
+    <div class="row">
+		<div class="col-sm-3 text-right{if $form->getComponent('WWW')->isRequired()} required{/if}">
+			{label WWW class => 'control-label' /}
+		</div>
+		<div class="col-sm-6">
+			{input WWW class => 'form-control'}
+		</div>
+    </div>
+
+    <div class="row">
+		<div class="col-sm-3 text-right{if $form->getComponent('ADDRESS')->isRequired()} required{/if}">
+			{label ADDRESS class => 'control-label' /}
+		</div>
+		<div class="col-sm-6">
+			{input ADDRESS class => 'form-control'}
+		</div>
+    </div>
+
+    <div class="row">
+		<div class="col-sm-3 text-right{if $form->getComponent('CODE')->isRequired()} required{/if}">
+			{label CODE class => 'control-label' /}
+		</div>
+		<div class="col-sm-6">
+			{input CODE class => 'form-control'}
+		</div>
+    </div>
+    
+    <div class="row">
+		<div class="col-sm-3 text-right{if $form->getComponent('ZIP')->isRequired()} required{/if}">
+			{label ZIP class => 'control-label' /}
+		</div>
+		<div class="col-sm-6">
+			{input ZIP class => 'form-control'}
+		</div>
+    </div>
+
+	<div class="row">
+		<div class="col-sm-3 col-sm-offset-3">
+			{input send class => 'btn btn-success'}
+			<a n:href="default" class="btn btn-default">Zrušit</a>
+		</div>
+	</div>
+{/form}

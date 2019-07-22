@@ -1,0 +1,58 @@
+
+{block content}
+
+{form form}
+    {input ID}
+
+    <div class="row">
+		<div class="col-sm-3 text-right{if $form->getComponent('NAME')->isRequired()} required{/if}">
+			{label NAME class => 'control-label' /}
+		</div>
+		<div class="col-sm-6">
+			{input NAME class => 'form-control'}
+		</div>
+    </div>
+
+    <div class="row">
+		<div class="col-sm-3 text-right{if $form->getComponent('LOGIN')->isRequired()} required{/if}">
+			{label LOGIN class => 'control-label' /}
+		</div>
+		<div class="col-sm-6">{input LOGIN class => 'form-control'}</div>
+    </div>
+
+    <div class="row">
+		<div class="col-sm-3 text-right{if $form->getComponent('PASS')->isRequired()} required{/if}">
+			{label PASS class => 'control-label' /}
+		</div>
+		<div class="col-sm-6">{input PASS class => 'form-control'}</div>
+    </div>
+
+    <div class="row">
+		<div class="col-sm-3 text-right{if $form->getComponent('ROLE')->isRequired()} required{/if}">
+			{label ROLE class => 'control-label' /}
+		</div>
+		<div class="col-sm-3">{input ROLE class => 'form-control'}</div>
+    </div>
+
+    <div class="row">
+		<div class="col-sm-3 text-right">
+			{label LABS class => 'control-label' /}
+		</div>
+		<div class="col-sm-6">
+			{var $labs = $form->getComponent('LABS')->getItems()}
+			{foreach $labs as $labsId=>$labsName}
+				<div class="checkbox3 checkbox-check checkbox-round checkbox-light">
+					{input LABS:$labsId, class=>'form-control'}
+					{label LABS:$labsId, class=>'control-label' /}
+				</div>
+			{/foreach}
+		</div>
+    </div>
+
+	<div class="row">
+		<div class="col-sm-3 col-sm-offset-3">
+			{input send class => 'btn btn-success'}
+			<a n:href="default" class="btn btn-default">Zrušit</a>
+		</div>
+	</div>
+{/form}

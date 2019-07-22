@@ -1,0 +1,50 @@
+#
+# WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
+# https://nette.org/security-warning
+#
+parameters:
+	version: 1.0.1
+
+application:
+#	errorPresenter: Error
+	mapping:
+		*: Lab\*Module\Presenters\*Presenter
+
+session:
+	expiration: 2 days
+
+services:
+	- Lab\Forms\FormFactory
+	- Krecek5\Config
+	- Lab\LabUser
+#	- Lab\LabMethod
+#	- Lab\Method
+	- Lab\Laboratory
+	- Lab\Users\User
+#	- Lab\EnumVzpNclp
+#	- Lab\EnumVzpVyk
+#	- Lab\EnumNclp
+#	- Lab\EnumLabmet
+#	- Lab\EnumVzpIvlp
+#	- Lab\EnumVzpZum
+#	- Lab\EnumVzpStomag
+#	- Lab\EnumNclpJedn
+#	- Lab\EnumNclpMaterial
+#	- Lab\EnumNclpNadoby
+#	- Lab\EnumNclpProcedury
+#	- Lab\EnumNclpSyst
+#	- Lab\EnumNclpVysetreni
+#	- Lab\EnumNclpPol
+#	- Lab\EnumNormaly
+#	- Lab\EnumZum
+#	- Lab\EnumZulp
+#	- Lab\Dashboard
+	- Lab\Version
+#	- Lab\LinkedMethod    	
+	authenticator: \Lab\Authenticator
+	router: \Lab\RouterFactory::createRouter
+#	database: @dibi
+#	db: \Db
+
+extensions:
+	dibi: Dibi\Bridges\Nette\DibiExtension22

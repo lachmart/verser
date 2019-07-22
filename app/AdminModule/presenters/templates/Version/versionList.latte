@@ -1,0 +1,39 @@
+<div class="_method-list-wrapper">
+
+    <div class="method-list-inner">
+        <table class="table table-hover method-list">
+            <tr>
+                <th colspan="2">Přehled uvolněných verzí</th>
+            </tr>
+            {foreach $versionList as $vl} 
+                <tr>
+                    <td class="w30i">
+                        {if $vl->ACTIVE == 1}
+                            <span class="fa fa-toggle-on fa-lg text-success"></span>
+                        {else}
+                            <span class="fa fa-toggle-off fa-lg text-danger"></span>
+                        {/if}
+                    </td>
+                    <td>
+                        <a n:href="Version:default, id=>$vl->ID" class="text-bold">
+                            {if $vl->NAME != ""}
+                                {$vl->NAME}
+                            {else}
+                                <i class="text-muted">neuvedeno</i>
+                            {/if}
+                        </a>
+                        <br/>
+                        <span class="icon fa fa-calendar"></span>&nbsp;{$vl->RELEASE_DATE}                        
+                    </td>
+                </tr>
+            {/foreach}
+        </table>
+    </div>
+
+</div>
+
+<style type="text/css">
+    .row-method-selected {
+        background-color: #1ABC9C;
+    }
+</style>

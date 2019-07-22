@@ -1,0 +1,51 @@
+<div class="side-menu sidebar-inverse">
+	
+    <nav class="navbar navbar-default" role="navigation">
+		<div class="side-menu-container">
+	
+    		<div class="navbar-header">
+				<a class="navbar-brand" n:href="Version:default">
+					<div class="icon fa fa-paper-plane"></div>
+					<div class="title">i-Version</div>
+				</a>
+				<button type="button" class="navbar-expand-toggle pull-right visible-xs">
+					<i class="fa fa-times icon"></i>
+				</button>
+			</div>
+
+			<ul class="nav navbar-nav">
+
+    			<li class="{if $selectedMainMenu == 'Version:'}active{/if}">
+    				<a n:href="Version:">
+    					<span class="icon fa fa-book"></span><span class="title">i-VERSION - popis verzí</span>
+    				</a>
+    			</li>    
+    		
+            	<li class="{if $selectedMainMenu == 'Setting:'}active{/if} panel panel-default dropdown">
+    				<a href="#dropdown-setting" data-toggle="collapse">
+    					<span class="icon fa fa-cogs"></span><span class="title">Nastavení</span>
+    				</a>
+    				<div class="panel-collapse collapse{if $selectedMainMenu == 'Setting:'} in{/if}" id="dropdown-setting" aria-expanded="false">
+    					<div class="panel-body">
+    						<ul class="nav navbar-nav">
+    							<li class="{if $selectedSubMenu == 'User:'}active{/if}">
+    								<a n:href="User:">
+    									<span class="icon fa fa-users"></span><span class="title">Uživatelé</span>
+    								</a>
+    							</li>
+    							<li class="{if $selectedSubMenu == 'Laboratory:'}active{/if}">
+    								<a n:href="Laboratory:">
+    									<span class="icon fa fa-book"></span><span class="title">Laboratoře</span>
+    								</a>
+    							</li>
+    						</ul>
+    					</div>
+    				</div>
+    			</li>
+                
+			</ul>
+		</div>
+		
+	</nav>
+	
+</div>

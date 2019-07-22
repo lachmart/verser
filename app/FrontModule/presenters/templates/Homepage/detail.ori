@@ -1,0 +1,156 @@
+{* Latte template *}
+
+{block content}
+
+<ol class="breadcrumb">
+	<li><a n:href="default">Přehled metod</a></li>
+	<li>{Str::in($metoda['NAZEV'])}</li>
+</ol>
+
+<h1>
+	<span class="fa fa-info-circle"></span>
+	{Str::in($metoda['NAZEV'])}
+</h1>
+
+<div class="alert alert-info">
+    {\Krecek\Repository\Table::resolveStatim($metoda['STATIM'])|noescape}   
+    &nbsp;&nbsp;&nbsp;
+    {if ($metoda['IS_NOT_TUBEMAIL'] == "1") }
+       <img src="{$basePath}/images/stop_tm_100.png" border="0" title="N e p o s í l a t  p o t r u b n í  p o š t o u !"/>
+    {/if}
+    &nbsp;&nbsp;&nbsp;
+    {if ($metoda['IS_ISO'] == "1") }
+       <img src="{$basePath}/images/akreditovana_100.png" border="0" title="A k r e d i t o v a n á  m e t o d a !"/>
+    {/if}
+</div>
+
+<div class="table-responsive">
+	<table class="table table-bordered">
+		<tbody>
+			<tr>
+				<th class="text-bold" style="width:20%">Název vyšetření [zkratka]:</th>
+				<th><h3 class="text-danger">{Str::in($metoda['NAZEV'])} </h3>
+					&nbsp;&nbsp;[{$metoda['ZKRATKA']}]&nbsp;					
+					<span class="text-muted">(synonyma : {$metoda['SYNONYMA']})</span>
+				</th>
+			</tr>
+            {if trim($metoda['NCLPTK'])!=""}
+            <tr>
+				<th class="text-bold">Kategorie vyšetření:</th>
+				<td><h3 class="text-danger">{$metoda['NCLPTK']}</h3>
+				</td>
+			</tr>
+            {/if}
+			<tr>
+				<th class="text-bold">Místo provádění vyšetření:</th>
+				<td>{$form_labs[$metoda['LAB']]}
+					<!-- span style="margin-left:10rem;" class="text-info">Kategorie vyšetření: {$metoda['NCLPTK']}</span -->
+				</td>
+			</tr>
+			<tr>
+				<th class="text-bold">Výsledek vydán do:</th>
+				<td>{$metoda['VYSLEDEK_1']} {$metoda['VYSLEDEK_1_TYP']} [H=hodina,D=den,W=týden,M=měsíc]</td>
+			</tr>
+			<tr>
+				<th class="text-bold">Biologický materiál:</th>
+				<td>{Str::in($metoda['NCLPMAT'])} - systém: {Str::in($metoda['NCLPSYST'])}</td>
+			</tr>
+			<tr>
+				<th class="text-bold">Odběrová nádobka:</th>
+				<td>{Str::in($metoda['NCLPONP'])} - množství: {Str::in($metoda['ODB_MNOZSTVI'])}</td>
+			</tr>      
+      <tr>
+         <th class="text-bold">Podmínky pro transport:</th>
+         <td>Transportní čas do: {\Krecek\Util\DateUtil::countTime($metoda['TAT_TRANSPORT'])} - transportní
+              teplota: {$metoda['TAT_TEPLOTA']}&ndash;{$metoda['TAT_TEPLOTA_DO']}&nbsp;&deg;C
+              {if trim($metoda['OMEZENI_R'])!=""}
+                  <br/><br/>{$metoda['OMEZENI_R']|noescape}
+              {/if}
+         </td>
+       </tr>
+      {if trim($metoda['DOORDINACE'])!=""}
+          <tr>
+              <th class="text-bold">Možnost doordinovat do:</th>
+              <td>{\Str::in($metoda['DOORDINACE'])|noescape}</td>
+          </tr>
+      {/if}
+      {if trim($metoda['INDIKACE'])!=""}
+          <tr>
+              <th class="text-bold">Indikace:</th>
+              <td>{$metoda['INDIKACE']|noescape}</td>
+          </tr>
+      {/if}
+      {if trim($metoda['JEDNOTKA'])!=""}
+      <tr>
+          <th class="text-bold">Měrná jednotka výsledku:</th>
+          <td>{$metoda['JEDNOTKA']}</td>
+      </tr>
+      {/if}
+    
+			<tr>
+				<th class="text-bold">Hodnotící (referenční) meze:</th>
+				<td>
+					{if !$referable}
+						<span class="text-muted">---</span>
+					{else}
+
+						<table class="table table-bordered table-info" cellspacing="0" cellpadding="0">
+							<thead>
+								<tr>
+									<th>Sex:</th>
+									<th>Věk:</th>
+									<th>&lt;&lt;&lt;</th>
+									<th>&lt;&lt;</th>
+									<th>&lt;</th>
+									<th class="text-center">Normál:</th>
+									<th class="text-right">&gt;</th>
+									<th class="text-right">&gt;&gt;</th>
+									<th class="text-right">&gt;&gt;&gt;</th>
+								</tr>
+							</thead>
+							<tbody>
+              {foreach $referable as $ref}
+								<tr>
+									<td>{if $ref['SEX'] == 0}M+F{elseif $ref['SEX'] == 1}M{elseif $ref['SEX'] == 2}F{else}{/if}</td>
+									<td>
+										{\Krecek\Util\DateUtil::countAge($ref['VEK_OD'])}
+										&ndash;
+										{\Krecek\Util\DateUtil::countAge($ref['VEK_DO'])}
+									</td>
+									<td>{$ref['PATOL_OD']}</td>
+									<td>{$ref['NIZKA_OD']}</td>
+									<td>{$ref['SNIZENA_OD']}</td>
+									<td class="text-center">
+										{$ref['NORMAL_OD']}
+										&ndash;
+										{$ref['NORMAL_DO']}
+									</td>
+									<td class="text-right">{$ref['SNIZENA_DO']}</td>
+									<td class="text-right">{$ref['NIZKA_DO']}</td>
+									<td class="text-right">{$ref['PATOL_DO']}</td>
+								</tr>
+                {/foreach}
+							</tbody>
+						</table>
+					{/if}
+				</td>
+			</tr>
+      {if trim($metoda['HODNOCENI'])!=""}
+          <tr>
+              <th class="text-bold">Informace k vyšetření:</th>
+              <td>{$metoda['HODNOCENI']|noescape}</td>
+          </tr>
+      {/if}
+
+		</tbody>
+	</table>
+</div>
+
+<div class="container text-center">
+	<a n:href="default" class="btn btn-default">
+		<span class="fa fa-arrow-left"></span>
+		Zpět na seznam
+	</a>
+</div>
+
+<br />

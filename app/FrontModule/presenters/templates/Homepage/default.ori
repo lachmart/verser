@@ -1,0 +1,118 @@
+{* preview of all methods *}
+
+{block content}
+
+<h1>
+	<span class="fa fa-info-circle"></span>
+	IK+M Katalog laboratorních vyšetření
+</h1>
+
+<div class="well well-sm">
+
+	<br />
+	{* //////////////// SEARCH FORM *}
+	<form action="{link Homepage:default}" method="get">
+		<div class="row">
+			<div class="col-sm-3">
+				<label class="control-label">Laboratorní vyšetření</label>
+				<input id="input-nazev" value="" type="text" name="nazev" class="form-control" />
+			</div>
+
+			<div class="col-sm-3">
+				<label class="control-label">Laboratorní pracoviště</label>
+				<select id="input-lab" name="lab" class="form-control">
+          <option value="">--- Všechna laboratorní pracoviště ---</option>
+					{foreach $form_labs as $fl_key=>$fl_value}
+						<option value="{$fl_key}">{$fl_value}</option>
+					{/foreach}
+				</select>
+			</div>
+
+			<div class="col-sm-3">
+				<label class="control-label">Kategorie vyšetření</label>
+				<select id="input-kategorie" name="kategorie" class="form-control">
+					<option value="">--- Všechny kategorie vyšetření ---</option>
+					{foreach $form_kv as $kv_value}
+						<option value="{$kv_value['KLIC']}">{Str::in($kv_value['N32'])} | {$kv_value['KLIC']}</option>
+					{/foreach}
+				</select>
+			</div>
+
+			<div class="col-sm-1">
+				<br />
+				<input type="submit" class="btn btn-success" id="filter-btn-submit" value="Vyhledat vyšetření" />
+				<input type="reset" class="btn btn-reset" id="filter-btn-reset" value="Reset formuláře" />
+			</div>
+
+		</div>
+	</form>
+	{* //////////////// SEARCH FORM *}
+</div>
+{*snippet labmet*}
+<table cellspacing="0" cellpadding="0" border="0" class="table table-stripped table-bordered dg">
+	<thead>
+		<tr>
+			<th>Laboratoř</th>
+			<th width="40%">Laboratorní vyšetření [zkratka]</th>
+			<!-- th>NČLP kód</th -->
+      <th>Materiál</th>
+			<th>Kategorie vyšetření</th>
+			<th width="15%">RUTINA | STATIM | VITAL</th>
+		</tr>
+	</thead>
+	<tbody>
+		{foreach $data as $cnt=>$d}
+			<tr>
+				<td>{$d['LAB']}</td>
+				<!-- td class="text-nowrap"><a n:href="detail, id=>$d['ID']">{$d['NAZEV']} [kód: {$d['KLIC']}, zkratka: {$d['ZKRATKA']}]</a></td -->
+        <td class="text-nowrap"><a n:href="detail, id=>$d['ID']">{$d['NAZEV']}</a></td>
+        <!-- td>{$d['NCLP_POL_KLIC']}</td -->
+				<!-- td>{*$d['NCLPMAT']*}</td -->
+        <td>{$d['NCLPMAT']}</td>
+				<!-- td>--UNDEFINED--</td -->
+        <!-- td>{$d['NCLPMTK']}</td -->
+				<td>{$d['NCLPTK']}</td>
+        <td>---</td>
+			</tr>
+		{/foreach}
+	</tbody>
+</table>
+{*/snippet*}
+<script>
+	jQuery(document).ready(function ()
+	{
+		var table = $('.dg').DataTable({
+			'serverSide': true,
+			'processing': true,
+			'ajax': {
+				'url': {plink Homepage:reloadData},
+				'data': function ( d ) {
+					return $.extend( {}, d, {
+						"lab": $('#input-lab').val(),
+						"nazev": $('#input-nazev').val(),
+						"kategorie": $('#input-kategorie').val(),
+						"material": $('#input-material').val()
+					} );
+				}
+			},
+			'aaSorting': [[1, 'asc']],
+			"bLengthChange": false,
+			"pageLength": 15,
+			"searching": false,
+			'oLanguage': {'sUrl': '../../js/DataTables/lang/cz.js'},
+			columns: [
+				{ data: "LAB"},
+				{ data: "NAZEV"},
+				{ data: "NCLPMAT"},
+				{ data: "NCLPTK"},
+				{ data: "STATIM"}
+			]
+		});
+
+		$('#filter-btn-submit').on("click", function () {
+			table.draw();
+			return false;
+		});
+
+	});
+</script>

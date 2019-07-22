@@ -1,0 +1,60 @@
+{define #h1block}
+<a n:href="form" class="btn btn-primary">
+	<span class="fa fa-plus"></span>
+	Nový záznam
+</a>
+{/define}
+
+{block content}
+<table class="table table-hover dg table-condensed">
+	<thead>
+		<tr>
+			<th class="w30i">ID</th>
+			<th class="">Jméno</th>
+			<th class="">Přiřazené laboratoře</th>
+			<th class="w30i">&nbsp;</th>
+		</tr>
+	</thead>
+	<tbody>
+		{foreach $list as $u}
+			<tr class="{$u->IS_DELETED ? ' danger' : ''}">
+				<td>{$u->ID}</td>
+				<td>
+					<a class="text-bold" n:href="form, id=>$u->ID">
+						{if $u->NAME}
+							{$u->NAME}
+						{else}
+							<i>neuvedeno</i>
+						{/if}
+					</a>
+				</td>
+				<td>{$u->LAB}</td>
+				{if !$u->IS_DELETED}
+				<td class="text-center w30i"><a n:href="delete, id=>$u->ID" class="fa fa-trash-o confirm-delete"></a></td>
+				{else}
+				<td class="text-center w30i"><a n:href="recycle, id=>$u->ID" class="fa fa-recycle" title="Znovu aktivovat uživatele"></a></td>
+				{/if}
+			</tr>
+		{/foreach}
+	</tbody>
+</table>
+
+<script>
+	jQuery(document).ready(function ()
+	{
+		$(document).ready(function () {
+			var table = $('.dg').DataTable({
+				'aaSorting': [[1, 'asc']],
+				"lengthMenu": [5, 10, 25, -1],
+				'oLanguage': {'sUrl': '{$basePath|noescape}/js/DataTables/lang/cz.js'},
+				'aoColumns': [
+					null,
+					null,
+					null,
+					{ "bSortable": false}
+				],
+				'bStateSave': true
+			});
+		});
+	});
+</script>

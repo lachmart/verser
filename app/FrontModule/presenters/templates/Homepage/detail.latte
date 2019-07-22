@@ -1,0 +1,222 @@
+{* Latte template *}
+
+{block content}
+
+<!-- ol class="breadcrumb">
+	<li><span class="fa fa-arrow-right"><span>&nbsp;&nbsp;<a n:href="default">Seznam všech vyšeření</a></li>
+	<li>{Str::in($metoda['SYNONYMA'])}</li>
+</ol -->
+
+<h3>
+    <span class="fa fa-info-circle"></span>
+    <span class="font-weight-bold text-uppercase">{Str::in($metoda['NAZEV'])}</span>
+    <span class="fa fa-arrow-right"></span>
+    <span class="font-weight-normal">[
+        Režim vyšetření:&nbsp;{\Krecek\Repository\Table::resolveStatim($metoda['STATIM'])|noescape}
+        {if ($metoda['IS_NOT_TUBEMAIL'] == "1") }
+           <img src="{$basePath}/images/stop_tm_25.png" border="0" title="Neposílat potrubní poštou !"/>
+        {/if}
+        {if ($metoda['IS_ISO'] == "1") }
+           <img src="{$basePath}/images/akreditovana_25.png" border="0" title="Akreditovaná metoda !"/>
+        {/if}
+        {if ($metoda['IS_VAV'] == "1") }   
+            <img src="{$basePath}/images/vav.png" border="0" title="Pouze pro vědu/výzkum !"/>                            
+        {/if}
+        {if ($metoda['IS_EXTERNAL'] == "1") }
+            <img src="{$basePath}/images/ext.png" border="0" title="Provádí externí laboratoř !"/>
+        {/if}
+        ]
+    </span>
+</h3>
+
+{if trim($metoda['NAZEV1']) != ""}
+    <div class="alert alert-info text-bold">Název vyšetření v LP:&nbsp;{Str::in($metoda['NAZEV1'])}</div>
+{/if}
+
+<div class="table-responsive">
+	<table class="table table-stripped">
+		<tbody>
+			<tr>
+				<th class="text-bold" style="width:25%">Lokální kód:</th>
+				<th class="text-info"><big><span>[{$metoda['UNIVER']}]</span>&nbsp;&nbsp;&nbsp;<span class="fa fa-arrow-right">Zkratka vyšetření:&nbsp;[{$metoda['ZKRATKA']}]</span>&nbsp;&nbsp;<span class="fa fa-arrow-right">&nbsp;<span>NČLP kód:&nbsp;[{$metoda['NCLP_POL_KLIC']}]</span></big></th>
+			</tr>		
+			<tr>
+				<th class="text-bold" style="width:25%">Synonyma:</th>
+				<td class="text-danger">{$metoda['SYNONYMA']}</td>
+			</tr>
+            {if trim($metoda['JEDNOTKA']) != ""}
+                <tr>
+                    <th class="text-bold">Jednotka:</th>
+                    <td>{Str::in($metoda['JEDNOTKA'])}</td>
+                </tr>
+            {/if}
+{* Blok: Odběr BM *}
+  			<tr>
+				<th colspan="2"><h3 class="text-info">Informace k odběru materiálu</h3></th>
+			</tr>
+			<tr>
+				<th class="text-bold">Odebíraný materiál:</th> 
+                <td>{Str::in($metoda['NCLPMAT'])}</td>
+			</tr>
+			<tr>
+				<th class="text-bold">Odběr do:</th>
+				<td>{Str::in($metoda['NCLPONP'])}</td>
+			</tr>
+			<tr>
+				<th class="text-bold">Odebírané množství vzorku:</th>
+				<td>{Str::in($metoda['ODB_MNOZSTVI'])}</td>
+			</tr>
+            {if trim($metoda['POKYNY_ODBER']) != ""}			
+    			<tr>
+    				<th class="text-bold">Pokyny k odběru:</th>
+    				<td>{$metoda['POKYNY_ODBER']|noescape}</td>
+    			</tr>
+			{/if}
+            {if trim($metoda['POKYNY_TRANSPORT']) != ""}			
+    			<tr>
+    				<th class="text-bold">Pokyny k transportu:</th>
+    				<td>{$metoda['POKYNY_TRANSPORT']|noescape}</td>
+    			</tr>
+			{/if}
+			
+            <tr>
+               <th class="text-bold">Podmínky pro transport:</th>
+               <td>Transportní čas do: {$metoda['TAT_TRANSPORT']}h - transportní teplota: {$metoda['TAT_TEPLOTA']}&nbsp;&ndash;&nbsp;{$metoda['TAT_TEPLOTA_DO']}&nbsp;&deg;C</td>
+            </tr>
+{* Blok: Stabilita *}                        
+  			<tr>
+				<th colspan="2"><h3 class="text-info">Informace k předanalytické úpravě vzorků a stabilitě</h3></th>
+			</tr>
+            <tr>
+                <th class="text-bold">Stabilita (po separaci):</th>
+                <td>
+                    <span>Při teplotě:</span>
+                {if trim($metoda['ST_ANAL_TEMP1']) != 0}
+    				<span class="fa fa-thermometer" style="color:red;margin:5px;">&nbsp;+20&nbsp;&deg;C:</span>
+    				<span>{$metoda['ST_ANAL_TEMP1']}&nbsp;&nbsp;[{\Krecek\Repository\Table::resolveStAnal($metoda['ST_ANAL_TYP1'])|noescape}]</span>
+                {/if}
+                {if trim($metoda['ST_ANAL_TEMP2']) != 0}
+    				<span class="fa fa-thermometer" style="color:orange;margin:5px;">&nbsp;|&nbsp;4-8&nbsp;&deg;C:</span>
+    				<span>{$metoda['ST_ANAL_TEMP2']}&nbsp;&nbsp;[{\Krecek\Repository\Table::resolveStAnal($metoda['ST_ANAL_TYP2'])|noescape}]</span>
+                {/if}
+                {if trim($metoda['ST_ANAL_TEMP3']) != 0}
+    				<span class="fa fa-thermometer" style="color:blue;margin:5px;">&nbsp;|&nbsp;-20&nbsp;&deg;C:</span>
+    				<span>{$metoda['ST_ANAL_TEMP3']}&nbsp;&nbsp;[{\Krecek\Repository\Table::resolveStAnal($metoda['ST_ANAL_TYP3'])|noescape}]</span>
+                {/if}
+                {if trim($metoda['ST_ANAL_TEMP4']) != 0}
+    				<span class="fa fa-thermometer" style="color:magenta;margin:5px;">&nbsp;|&nbsp;-70&nbsp;&deg;C:</span>
+    				<span>{$metoda['ST_ANAL_TEMP4']}&nbsp;&nbsp;[{\Krecek\Repository\Table::resolveStAnal($metoda['ST_ANAL_TYP4'])|noescape}]</span>
+                {/if}
+                </td>
+            </tr>
+			<tr>
+				<th class="text-bold">Dostupnost pro RUTINNÍ vyšetření:</th>
+				<td>{\Krecek\Repository\Table::resolveDostupnost($metoda['DOSTUPNOST'])|noescape}</td>
+			</tr>
+			<tr>
+				<th class="text-bold">Odezva pro RUTINNÍ vyšetření:</th>
+				<td>{$metoda['VYSLEDEK_1']}&nbsp;&nbsp;[{\Krecek\Repository\Table::resolveStAnal($metoda['VYSLEDEK_1_TYP'])|noescape}]</td>
+			</tr>
+			<tr>
+				<th class="text-bold">Dostupnost pro STATIM vyšetření:</th>
+				<td>{\Krecek\Repository\Table::resolveDostupnost($metoda['DOSTUPNOST_S'])|noescape}</td>
+			</tr>
+			<tr>
+				<th class="text-bold">Odezva pro STATIM vyšetření:</th>
+				<td>{$metoda['VYSLEDEK_S']}&nbsp;&nbsp;[{\Krecek\Repository\Table::resolveStAnal($metoda['VYSLEDEK_S_TYP'])|noescape}]</td>
+			</tr>
+			
+{* Blok: Referenční rozmezí *}
+  			<tr>
+				<th colspan="2"><h3 class="text-info">Referenční rozmezí</h3></th>
+			</tr>			
+			<tr>
+				<th class="text-bold">Hodnotící (referenční) meze:</th>
+				<td>
+					{if !$referable}
+						<span class="text-muted">---</span>
+					{else}
+						<table class="table table-striped table-info" style="width:60%" cellspacing="0" cellpadding="0">
+							<thead>
+								<tr>
+									<th>Sex:</th>
+									<th>Věk:</th>
+									<!-- th>&lt;&lt;&lt;</th>
+									<th>&lt;&lt;</th>
+									<th>&lt;</th -->
+									<th class="text-center">Normál:</th>
+									<!-- th class="text-right">&gt;</th>
+									<th class="text-right">&gt;&gt;</th>
+									<th class="text-right">&gt;&gt;&gt;</th -->
+									<th>Jednotky:</th>
+								</tr>
+							</thead>
+							<tbody>
+                            {foreach $referable as $ref}
+								<tr>
+									<td>{if $ref['SEX'] == 0}M+F{elseif $ref['SEX'] == 1}M{elseif $ref['SEX'] == 2}F{else}{/if}</td>
+			     					<td>
+										{\Krecek\Util\DateUtil::countAge($ref['VEK_OD'])}
+										&ndash;
+										{\Krecek\Util\DateUtil::countAge($ref['VEK_DO'])}
+									</td>
+									<!-- td>{$ref['PATOL_OD']}</td>
+									<td>{$ref['NIZKA_OD']}</td>
+									<td>{$ref['SNIZENA_OD']}</td -->
+									<td class="text-center">
+										{$ref['NORMAL_OD']}
+										&ndash;
+										{$ref['NORMAL_DO']}
+									</td>
+									<!-- td class="text-right">{$ref['SNIZENA_DO']}</td>
+									<td class="text-right">{$ref['NIZKA_DO']}</td>
+									<td class="text-right">{$ref['PATOL_DO']}</td -->
+									<td>{Str::in($metoda['JEDNOTKA'])}</td>
+								</tr>
+                            {/foreach}
+							</tbody>
+						</table>
+					{/if}
+				</td>
+			</tr>
+            <tr>            
+                <th class="text-bold">Zdroj referenčního rozmezí:</th>
+                <td>{\Str::in($metoda['REFINT_ZDROJ'])|noescape}</td>
+            </tr>                
+{* Blok: Analytika *}
+  			<!-- tr>
+				<th colspan="2"><h3 class="text-info">Analytická metodika</h3></th>
+			</tr>
+			<tr>
+				<th class="text-bold">Metoda:</th>
+				<td>{* Str::in($metoda['NCLPPROC']) *}</td>
+			</tr -->
+{* Blok: Caharakteristika a klinický význam *}
+
+  			<!-- tr>
+				<th colspan="2"><h3 class="text-info">Charakteristika a klinický význam</h3></th>
+			</tr -->	        
+			<!-- tr>
+				<th class="text-bold">Laboratorní pracoviště:</th>
+				<td>{Str::in($metoda['LAB'])} </td>
+			</tr--> 
+    	</tbody>
+	</table>
+	<div class="alert alert-info">
+        {$metoda['POPIS']|noescape}
+    </div>
+	<div class="alert alert-danger text-bold">Aktualizace informací o vyšetření:
+    	{if $metoda['LAST_MODIFIED_DATE'] != null}
+			{$metoda['LAST_MODIFIED_DATE']->format('d.m.Y H:i')}, {$modifiedBy->NAME}
+		{/if}
+    </div>
+</div>
+
+<div class="container text-center">
+	<a n:href="default" class="btn btn-default">
+		<span class="fa fa-arrow-left"></span>
+		Zpět na seznam
+	</a>
+</div>
+
+<br />

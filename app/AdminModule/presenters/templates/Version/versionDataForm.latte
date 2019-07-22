@@ -1,0 +1,72 @@
+{block content}
+
+<br/>
+<a n:href="default" class="btn btn-warning">
+    <span class="fa fa-star"></span>
+    Přidej nový záznam
+</a>
+<br/>
+
+<div class="">
+{form versionDataForm}
+    {input ID}
+
+    {if $form->hasErrors()}
+        <div class="alert alert-danger" n:foreach="$form->errors as $error">{$error}</div>
+    {/if}
+
+    <div class="row">
+        <div class="col-sm-2 text-right{if $form->getComponent('CREATED_BY')->isRequired()} required{/if}">
+            {label CREATED_BY class=>'control-label' /}</div>
+        <div class="col-sm-2">{input CREATED_BY class=>'form-control'}</div>
+        <div class="col-sm-2 text-right{if $form->getComponent('CREATED_DATE')->isRequired()} required{/if}">
+            {label CREATED_DATE class=>'control-label' /}</div>
+        <div class="col-sm-2">{input CREATED_DATE class=>'form-control'}</div>        
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2 text-right{if $form->getComponent('LAST_MODIFIED_BY')->isRequired()} required{/if}">
+            {label LAST_MODIFIED_BY class=>'control-label' /}</div>
+        <div class="col-sm-2">{input LAST_MODIFIED_BY class=>'form-control'}</div>
+        <div class="col-sm-2 text-right{if $form->getComponent('LAST_MODIFIED_DATE')->isRequired()} required{/if}">
+            {label LAST_MODIFIED_DATE class=>'control-label' /}</div>
+        <div class="col-sm-2">{input LAST_MODIFIED_DATE class=>'form-control'}</div>        
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2 text-right{if $form->getComponent('ACTIVE')->isRequired()} required{/if}">
+            {label ACTIVE class=>'control-label' /}</div>
+        <div class="col-sm-2">{input ACTIVE class=>'form-control'}</div>
+        <div class="col-sm-2 text-right{if $form->getComponent('LEVEL')->isRequired()} required{/if}">
+            {label LEVEL class=>'control-label' /}</div>
+        <div class="col-sm-2">{input LEVEL class=>'form-control'}</div>
+    </div>
+
+    
+    <div class="row">
+        <div class="col-sm-2 {if $form->getComponent('DESCRIPTION')->isRequired()} required{/if}">
+            {label DESCRIPTION class=>'control-label' /}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-10">{input DESCRIPTION class=>'form-control'}</div>
+        <script>
+            CKEDITOR.replace('frm-versionDataForm-DESCRIPTION',
+                {
+                    customConfig: '{$basePath|noescape}{$editorConfigFileMini|noescape}'
+                });
+        </script>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-1">
+            {input submit class=>'btn btn-success'}
+        </div>
+        <div class="col-sm-1">
+            <button type="reset" value="Reset">Reset</button>
+        </div>
+    </div>
+
+{/form}
+
+</div>

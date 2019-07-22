@@ -1,0 +1,193 @@
+@import url(//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic,700italic&subset=latin,latin-ext);
+
+body {
+/*	background: url('../images/main-bg-index.png') repeat-y 0 0; */ 
+	font-family: 'Source Sans Pro', Arial, sans-serif;
+	font-size: 1.4rem;
+}
+h1 {
+	margin: .2rem 0 1.5rem 0;
+	font-size: 2.5rem;
+	text-transform: uppercase;
+}
+h3 {
+	margin: .2rem 0 1.5rem 0;
+	font-size: 2.1rem;
+	text-transform: uppercase;
+}
+
+.breadcrumb {
+    margin-top:10px;
+	border-radius:10px;
+}
+.text-bold {
+	font-weight:bold;
+}
+.top-header-wrapper {
+    height:20px;
+/*	background-color:#3C97C7; */
+
+}
+.top-header {
+	color:#fff;
+	padding:0 3rem;
+	font-size:1.5rem
+}
+.container {
+/* 	background-color:#fff; */
+}
+.menu-container {
+    padding-left:30px;
+	background-color:#e41e26; 
+}
+.well {
+	background-image:none !important;
+	background-color:#E8E8E8;
+	box-shadow:none;
+	border-radius:0px;
+	border:none;
+	margin-bottom:0px;
+}
+nav {
+}
+.navbar-default{
+/*	background-image:none !important; */
+/* 	background-color:#50A2CD;*/
+	box-shadow: none;
+	border:none;
+	border-radius:0px;
+}
+.navbar-default a{
+/*  background-color:#50A2CD; */
+	color:#fff !important;
+	text-shadow:none !important;
+	text-transform: uppercase;
+	font-size:1.3rem;
+	font-weight:bold;
+}
+.navbar-default li:hover, a.navbar-brand:hover {
+/*	background-color:rgb(228,30,38) !important */
+    background-color:#cc0000;
+}
+
+/**************/
+/** buttons  **/
+.btn-success {
+	background-image:none !important;
+    background-color:#cc0000;
+	border: 1px solid #b63c2e;
+/*	box-shadow: 0 0 3px rgba(0, 0, 0, 0.4); */
+	color: #fff;
+	height: 35px;
+	line-height: 28px;
+	padding: 0 15px;
+}
+.btn-success:hover {
+/*	background-color: #962C1E; */
+}
+.btn {
+	border-radius:2px;
+}
+.form-control {
+	font-size:1.4rem;
+	background-color:#f2f2f2;
+	color:#3C97C7;
+}
+
+/*************************/
+/** defaul table styles */
+.table {
+}
+.table thead th {
+/*
+	color:#fff; */
+	background-color: #CFCFCF;
+	
+}
+.table tbody th {
+	background-color: #F4F4F4;
+}
+.table tbody td {
+}
+
+/*************************/
+/** footer section ******/
+/*
+footer { 
+    background-color: #FFFFFF;
+    padding: 2rem 0 0 0;
+
+}
+footer * {
+    color: #FFF;
+}
+*/
+
+/****************************/
+/** footer app styles  **/
+
+footer .tail {
+    margin-top: 2rem;
+    background-color: #DFB000;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    margin-left: 0;
+    margin-right: 0;
+}
+.logo-footer {
+    padding-bottom: 2rem;
+    padding-top: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #2c4061;
+}
+footer .font-dark {
+    color: #466482;
+}
+footer h3 {
+    font-size: 2.0rem;
+    margin-bottom: 3.0rem;
+}
+footer .submenu {
+    list-style: none;
+    line-height: 2.5;
+    text-indent: 0;
+    padding-left: 0;
+}
+
+/****************************/
+/** footer origin styles  **/
+footer {
+  display: block;
+  background: #F9F9F9;
+}
+.footer {
+  font-size: 1.5rem;
+}
+.footer-container {
+  position: relative;
+  background-size: cover;
+  width: 100%;
+  padding: 20px;
+}
+.footer-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+.footer-copyright {
+  background: #624e3e;
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 18px 0;
+}
+.footer-logo {
+  width: 100%;
+}
+.footer-logo .logo {
+  width: 250px;
+}
+h3.footer-block {
+    font-size: 16pt;
+	text-transform: uppercase;
+    color: #000;
+}
