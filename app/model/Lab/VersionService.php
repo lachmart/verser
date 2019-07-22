@@ -6,7 +6,7 @@ class Version
 {
     const TABLE_VERSION = 'version';
     const TABLE_VERSIONDATA = 'version_data';
-   
+
     /** @var \DibiConnection */
 	private $db;
 
@@ -20,9 +20,9 @@ class Version
   		return $this->db->select('*')
             ->from(self::TABLE_VERSION)
   			->where('SYS_ID = 1 and ACTIVE = 1')
-            ->orderBy('ID desc')  			
+            ->orderBy('ID desc')
   			->fetchAll();
-  	}  	
+  	}
 
     function find($id) {
         return $this->db->select('*')
@@ -37,12 +37,17 @@ class Version
             ->where('ID = ?', $id)
             ->fetch();
     }
+    function deleteVersion($id) {
+        return $this->db->delete(self::TABLE_VERSIONDATA)
+            ->where('ID = ?', $id)->execute();
+
+    }
 
     function getListVersionData($id) {
         return $this->db->select('*')
             ->from(self::TABLE_VERSIONDATA)
             ->where('VERSION_ID = ?', $id)
-            ->orderBy('LAST_MODIFIED_DATE desc')            
+            ->orderBy('LAST_MODIFIED_DATE desc')
             ->fetchAll();
     }
 
@@ -54,8 +59,8 @@ class Version
     function save($vals) {
 
         $save = [
-            'ID' => $vals['ID'],      
-            'VERSION_ID' => $vals['VERSION_ID'],                  
+            'ID' => $vals['ID'],
+            'VERSION_ID' => $vals['VERSION_ID'],
             'ACTIVE' => $vals['ACTIVE'],
             'LEVEL' => $vals['LEVEL'],
             'DESCRIPTION' => $vals['DESCRIPTION'],
@@ -71,14 +76,14 @@ class Version
             $save['VERSION_ID'] = 1;
             $save['ACTIVE'] = 'A';
             $save['LEVEL'] = '1';
-            $save['DESCRIPTION'] = '???';            
+            $save['DESCRIPTION'] = '???';
 
             $this->db->insert(self::TABLE_VERSIONDATA, $save)->execute();
-            
+
         } else {
-            
+
             $ID = $vals['ID'];
-            $VERSION_ID = $vals['VERSION_ID'];            
+            $VERSION_ID = $vals['VERSION_ID'];
             $ACTIVE = $vals['ACTIVE'];
             $LEVEL = $vals['LEVEL'];
             $DESCRIPTION = $vals['DESCRIPTION'];

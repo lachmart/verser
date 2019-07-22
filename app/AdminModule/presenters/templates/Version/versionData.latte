@@ -3,42 +3,41 @@
 {if $id}
 
     <div class="alert alert-info text-bold" role="alert">
-        Seznam popisů pro verzi:  
+        Seznam popisů pro verzi:
     </div>
 
     <div class="method-list-inner">
-    
+
         <table class="table method-list">
-            {foreach $versionListData as $vld} 
+            {foreach $versionListData as $vld}
                 <tr>
                     <td class="bg-info text-bold">
                        {$vld->LAST_MODIFIED_DATE}
                     </td>
                     <td width="120px;">
-                        <a n:href="Version:versionDataForm id=>$vld->ID, vid=>$vld->VERSION_ID" class="text-bold">                            
+                        <a n:href="Version:versionDataForm id=>$vld->ID, vid=>$vld->VERSION_ID" class="text-bold">
                             <i class="icon fa fa-pencil"> </i>&nbsp;Edit&nbsp;
                         </a>
-                        <a n:href="Version:deleteDataForm id=>$vld->ID, vid=>$vld->VERSION_ID" class="text-bold">                            
+                        <a n:href="Version:delete id=>$vld->ID, vid=>$vld->VERSION_ID" class="text-bold">                            
                             <i class="icon fa fa-remove"> </i>&nbsp;Delete&nbsp;
                         </a>
 
-                    </td>                                        
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2">
                        {$vld->DESCRIPTION}
-                    </td>                    
+                    </td>
                 </tr>
             {/foreach}
         </table>
-    
+
     </div>
-{else}    
+{else}
     <div class="alert alert-info">
 
         Pro zobrazení obsahu popisu veze je nutné zvolit požadavanou verzi systému!!
-        <br/><br/> 
-        Pokračujte výberem požadované verze v panelu "Seznam dostupných verzí" 
+        <br/><br/>
+        Pokračujte výberem požadované verze v panelu "Seznam dostupných verzí"
     </div>
 {/if}
-

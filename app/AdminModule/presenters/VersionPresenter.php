@@ -100,6 +100,18 @@ class VersionPresenter extends BasePresenter {
 
     }
 
+    function actionDelete($vid) {
+
+        $id = $this->getParameter('id', 0);
+        $success =  $this->version->deleteVersion($id);
+        if ($success)
+          $this->flashMessage('Záznam odstraněn', 'success');
+        else {
+          $this->flashMessage('Záznam nebyl odstraněn', 'danger');
+        }
+        $this->redirect('default', ['id' => $vid] );
+    }
+
     function renderForm() {
         $this->template->h1 = 'Editace obsahu verze';
     }
