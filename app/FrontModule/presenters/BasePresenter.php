@@ -9,13 +9,13 @@ use Nette;
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter {
 
-	/** @var \Dibi\Connection */
+	/** @var Database1 @inject */
 	protected $connection;
 
 	function startup() {
 		parent::startup();
 
-		$this->connection = $this->context->getService('dibi.connection');
+		$this->connection = $this->context->getService('database1');
 
 		try {
 			$this->connection->connect();

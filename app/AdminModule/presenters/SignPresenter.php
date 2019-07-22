@@ -65,7 +65,7 @@ class SignPresenter extends BasePresenter {
 //		}
 
         //$this->flashMessage('Přihlášení proběhlo v pořádku', 'success');
-        $this->redirect('Catalog:');
+        $this->redirect('Version:');
 
     }
 
