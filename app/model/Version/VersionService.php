@@ -24,25 +24,25 @@ class Version
   			->fetchAll();
   	}
 
-    function getListVersion() {
+    function getListVersion($sid) {
   		return $this->db->select('*')
             ->from(self::TABLE_VERSION)
-  			->where('SYS_ID = 1 and ACTIVE = 1')
+  			->where('SYS_ID = ? and ACTIVE = 1',$sid)
             ->orderBy('ID desc')
   			->fetchAll();
   	}
 
     function getVersionIdName($id) {
-        return $this->db->select('*')
+        return $this->db->select('NAME')
             ->from(self::TABLE_VERSION)
-            ->where('ID = ?', $id)            
-            ->fetchPairs('ID', 'NAME');
+            ->where('ID = ?', $id)
+            ->fetchSingle();
     }
 
     function find($id) {
         return $this->db->select('*')
             ->from(self::TABLE_VERSION)
-            ->where('ID = ?', $id)            
+            ->where('ID = ?', $id)
             ->fetchAll();
     }
 
@@ -52,7 +52,7 @@ class Version
             ->where('ID = ?', $id)
             ->fetch();
     }
-    
+
     function deleteVersionData($id) {
         return $this->db->delete(self::TABLE_VERSIONDATA)
             ->where('ID = ?', $id)->execute();
@@ -77,41 +77,26 @@ class Version
             'ID' => $vals['ID'],
             'VERSION_ID' => $vals['VERSION_ID'],
             'ACTIVE' => $vals['ACTIVE'],
-            'TITLE' => $vals['TITLE'],            
+            'TITLE' => $vals['TITLE'],
             'LEVEL' => $vals['LEVEL'],
             'DESCRIPTION' => $vals['DESCRIPTION'],
-            'CREATED_DATE' => $vals['CREATED_DATE'],
-            'CREATED_BY' => $vals['CREATED_BY'],
+          //  'CREATED_DATE' => $vals['CREATED_DATE'], //při editaci nelze měnit
+          //  'CREATED_BY' => $vals['CREATED_BY'], //při editaci nelze měnit
             'LAST_MODIFIED_DATE' => $vals['LAST_MODIFIED_DATE'],
             'LAST_MODIFIED_BY' => $vals['LAST_MODIFIED_BY'],
         ];
 
-        if (!$vals['ID']) {
-
+        if ($save['ID']){
+          $this->db->update(self::TABLE_VERSIONDATA, $save)->where('ID = ?', $vals['ID'])->execute();
+        }
+        else {
             $save['ID'] = $this->generateId();
-            $save['VERSION_ID'] = 1;
-            $save['ACTIVE'] = 'A';
-            $save['LEVEL'] = '1';
-            $save['TITLE'] = '?';
-            $save['DESCRIPTION'] = '?';
-            $save['CREATED_BY'] = 1;
-            $save['CREATED_DATE'] = null;
-            $save['LAST_MODIFIED_BY'] = 1;
-            $save['LAST_MODIFIED_DATE'] = null;
-            
+
+            $save['CREATED_BY'] = $vals['CREATED_BY'];
+            $save['CREATED_DATE'] = $vals['CREATED_DATE'];
+
             $this->db->insert(self::TABLE_VERSIONDATA, $save)->execute();
 
-        } else {
-
-            $ID = $vals['ID'];
-            $VERSION_ID = $vals['VERSION_ID'];
-            $ACTIVE = $vals['ACTIVE'];
-            $LEVEL = $vals['LEVEL'];
-            $TITLE = $vals['TITLE'];
-            $DESCRIPTION = $vals['DESCRIPTION'];
-            $LAST_MODIFIED_BY = $vals['LAST_MODIFIED_BY'];
-            $LAST_MODIFIED_DATE = $vals['LAST_MODIFIED_DATE'];
-            $this->db->update(self::TABLE_VERSIONDATA, $save)->where('ID = ?', $vals['ID'])->execute();
         }
     }
 

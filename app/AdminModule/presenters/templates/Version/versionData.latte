@@ -1,21 +1,26 @@
-{if $id}
+{if $vid}
     <div class="alert alert-info" style="padding-bottom:8px;">
-        <h4><span class="icon fa fa-file-text"><span>&nbsp;Seznam popisů verzí: {*$versionIdName['NAME']*}</h4>
-    </div>    
+        <h4><span class="icon fa fa-file-text"><span>&nbsp;Seznam popisů verzí: {$versionIdName}</h4>
+
+    </div>
+    <a n:href="Version:versionDataForm vid=>$vid,sid=>$sid" class="btn btn-warning">
+        <span class="fa fa-star"></span>
+        Přidej nový záznam
+    </a>
 
     <div class="method-list-inner">
-    {foreach $versionListData as $vld} 
+    {foreach $versionListData as $vld}
         {if ($vld->ACTIVE == 'A')}
             <div style="padding:5px;">
                 <div class="w3-panel-primary">
                     <h3><span class="icon fa fa-check-square-o"><span>&nbsp;{$vld->TITLE} | {$vld->LAST_MODIFIED_DATE->format('d.m.Y')}</h3>
-                    <hr class="w3-panel-primary-hr">                    
-                </div>                
+                    <hr class="w3-panel-primary-hr">
+                </div>
                 <div class="text-right">
-                    <a n:href="Version:versionDataForm id=>$vld->ID, vid=>$vld->VERSION_ID"  class="btn btn-info btn-sm" role="button">
+                    <a n:href="Version:versionDataForm id=>$vld->ID, vid=>$vld->VERSION_ID, sid=>$sid"  class="btn btn-info btn-sm" role="button">
                         <i class="icon fa fa-pencil"> </i>&nbsp;Editovat&nbsp;
                     </a>
-                    <a n:href="Version:delete id=>$vld->ID, vid=>$vld->VERSION_ID"  class="btn btn-danger btn-sm" role="button">                            
+                    <a n:href="Version:delete id=>$vld->ID, vid=>$vld->VERSION_ID, sid=>$sid"  onclick="return confirm('Záznam popisu verze bude smazán!  Chcete pokračovat?')" class="btn btn-danger btn-sm" role="button">
                         <i class="icon fa fa-remove"> </i>&nbsp;Smazat&nbsp;
                     </a>
                 </div>
@@ -23,26 +28,26 @@
             <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#description-{$iterator->counter}"><span class="icon fa fa-arrows-v"></span>&nbsp;Zobrazit/skrýt obsah popisu tématu</button>
             <div id="description-{$iterator->counter}" class="collapse">
                 {$vld->DESCRIPTION|noescape}
-            </div>                
+            </div>
         {else}
             <!-- div class="w3-block-warning" -->
             <div style="padding:5px;">
                 <div class="w3-panel-warning">
                     <h3><span class="icon fa fa-edit"><span>&nbsp;{$vld->TITLE} | {$vld->LAST_MODIFIED_DATE->format('d.m.Y')}</h3>
-                    <hr class="w3-panel-warning-hr">                                    
-                </div>                
+                    <hr class="w3-panel-warning-hr">
+                </div>
                 <div class="text-right">
-                    <a n:href="Version:versionDataForm id=>$vld->ID, vid=>$vld->VERSION_ID"  class="btn btn-info btn-sm" role="button">
+                    <a n:href="Version:versionDataForm id=>$vld->ID, vid=>$vld->VERSION_ID, sid=>$sid"  class="btn btn-info btn-sm" role="button">
                         <i class="icon fa fa-pencil"> </i>&nbsp;Editovat&nbsp;
                     </a>
-                    <a n:href="Version:delete id=>$vld->ID, vid=>$vld->VERSION_ID"  class="btn btn-danger btn-sm" role="button">                            
+                    <a n:href="Version:delete id=>$vld->ID, sid=>$sid, vid=>$vld->VERSION_ID"  class="btn btn-danger btn-sm" role="button">
                         <i class="icon fa fa-remove"> </i>&nbsp;Smazat&nbsp;
                     </a>
                 </div>
             </div>
             <div class="bg-warning">
-                {$vld->DESCRIPTION|noescape}                    
-            </div>            
+                {$vld->DESCRIPTION|noescape}
+            </div>
         {/if}
     {/foreach}
     </div>

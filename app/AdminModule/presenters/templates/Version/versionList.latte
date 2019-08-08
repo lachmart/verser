@@ -1,19 +1,19 @@
     <div class="alert alert-info" style="margin-bottom:0px; padding-bottom:8px;">
         <h4><span class="icon fa fa-codepen"></span>&nbsp;Popis systému</h4>
     </div>
-    <select name="linked-methods" id="linked-method-dropdown" class="xhr-linked-methods form-control no-select2">
+    <select name="linked-methods" id="linked-method-dropdown" class="xhr-linked-methods form-control no-select2" onchange="location = this.value;">
         <option value="">--- vyberte ---</option>
         {foreach $systemList as $sl}
-        <option value="{$sl['ID']}" selected>{$sl['NAME']}</option>
+        <option value="{link Version:default,sid=>$sl['ID']}" {if $sl['ID'] == $sid} selected {/if}>{$sl['NAME']}</option>
         {/foreach}
     </select>
     <br/>
-    <div class="method-list-inner">        
+    <div class="method-list-inner">
         <table class="table table-hover method-list">
             <tr>
                 <th colspan="2" style="background:#f4f4f4;">Přehled uvolněných verzí:</th>
             </tr>
-            {foreach $versionList as $vl} 
+            {foreach $versionList as $vl}
                 <tr>
                     <td class="w30i">
                         {if $vl->ACTIVE == 1}
@@ -23,7 +23,7 @@
                         {/if}
                     </td>
                     <td>
-                        <a n:href="Version:default, id=>$vl->ID" class="text-bold">
+                        <a n:href="Version:default,sid=>$sid, vid=>$vl->ID" class="text-bold">
                             {if $vl->NAME != ""}
                                 {$vl->NAME}
                             {else}
@@ -31,7 +31,7 @@
                             {/if}
                         </a>
                         <br/>
-                        <span class="icon fa fa-calendar"></span>&nbsp;{$vl->RELEASE_DATE}                        
+                        <span class="icon fa fa-calendar"></span>&nbsp;{$vl->RELEASE_DATE}
                     </td>
                 </tr>
             {/foreach}

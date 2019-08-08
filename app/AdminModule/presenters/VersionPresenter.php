@@ -28,12 +28,16 @@ class VersionPresenter extends BasePresenter {
         $this->template->h1 = 'Popisy verzí';
 
         $this->template->systemList = $this->version->getListSystem();
-        $this->template->versionList = $this->version->getListVersion();
 
-        $id = $this->getParameter('id', 0);
-        $this->template->id = $this->version->find($id);
-        $this->template->versionIdName = $this->version->getVersionIdName($id);        
-        $this->template->versionListData = $this->version->getListVersionData($id);
+        $sid = $this->getParameter('sid', 0);
+        $this->template->sid = $sid;
+        $this->template->versionList = $this->version->getListVersion($sid);
+
+
+        $vid = $this->getParameter('vid', 0);
+        $this->template->vid = $vid;
+        $this->template->versionIdName = $this->version->getVersionIdName($vid);
+        $this->template->versionListData = $this->version->getListVersionData($vid);
     }
 
     protected function createComponentVersionDataForm() {
@@ -42,9 +46,22 @@ class VersionPresenter extends BasePresenter {
 
         $form->addHidden('ID');
         $form->addHidden('VERSION_ID');
-        $form->addText('ACTIVE', 'Aktivní:');
-        $form->addText('LEVEL', 'Úroveň:');
-        $form->addText('TITLE', 'Titulek popisu:');        
+        $form->addHidden('SYS_ID', 'Systém:');
+        //$form->addText('ACTIVE', 'Aktivní:');
+        $form->addSelect('ACTIVE', 'Aktivní:', [
+            '0' => 'Ne',
+            'A' => 'Ano',
+        ]);
+        $form['ACTIVE']->setDefaultValue('0');
+
+        $form->addSelect('LEVEL', 'Úroveň:', [
+            '0' => 'Veřejný',
+            '1' => 'Privátní',
+        ]);
+        $form['ACTIVE']->setDefaultValue('0');
+
+        //$form->addText('LEVEL', 'Úroveň:');
+        $form->addText('TITLE', 'Titulek popisu:');
         $form->addTextArea('DESCRIPTION', 'Popis verze');
         $form->addText('CREATED_BY', 'Vytvořil:');
         $form->addText('CREATED_DATE', 'Dne:');
@@ -60,47 +77,47 @@ class VersionPresenter extends BasePresenter {
 
     }
 
-    function actionVersionDataForm($vid) {
+    function actionVersionDataForm($vid, $sid) {
 
         $id = $this->getParameter('id', 0);
-        $data = $this->version->findVersionData($id);
-
+        //$data = $this->version->findVersionData($id);
         $this->template->vid = $vid;
+        $this->template->sid = $sid;
+
 
         if ($id != 0) {
 
-//            $data = $this->version->findVersionData($id);
-
-            $this['versionDataForm']->getComponent('ID')->setValue($data->ID);
-            $this['versionDataForm']->getComponent('VERSION_ID')->setValue($data->VERSION_ID);
-            $this['versionDataForm']->getComponent('ACTIVE')->setValue($data->ACTIVE);
-            $this['versionDataForm']->getComponent('LEVEL')->setValue($data->LEVEL);            
-            $this['versionDataForm']->getComponent('TITLE')->setValue($data->TITLE);            
-            $this['versionDataForm']->getComponent('DESCRIPTION')->setValue($data->DESCRIPTION);
-            $this['versionDataForm']->getComponent('CREATED_BY')->setValue($data->CREATED_BY);
-            $this['versionDataForm']->getComponent('CREATED_DATE')->setValue($data->CREATED_DATE);
-            $this['versionDataForm']->getComponent('LAST_MODIFIED_BY')->setValue($data->LAST_MODIFIED_BY);
-            $this['versionDataForm']->getComponent('LAST_MODIFIED_DATE')->setValue($data->LAST_MODIFIED_DATE);
-
+            $data = $this->version->findVersionData($id);
+            $this['versionDataForm']->setDefaults([
+              'ID'=>$data->ID,
+              'VERSION_ID'=>$data->VERSION_ID,
+              'SYS_ID'=>$sid,
+              'ACTIVE'=>$data->ACTIVE,
+              'LEVEL'=>$data->LEVEL,
+              'TITLE'=>$data->TITLE,
+              'DESCRIPTION'=>$data->DESCRIPTION,
+              'CREATED_BY'=>$data->CREATED_BY,
+              'CREATED_DATE'=>$data->CREATED_DATE,
+              'LAST_MODIFIED_BY'=>$data->LAST_MODIFIED_BY,
+              'LAST_MODIFIED_DATE'=>$data->LAST_MODIFIED_DATE,
+            ]);
         } else {
 
-  /*
-            $this['versionDataForm']->getComponent('VERSION_ID')->setValue($vid);
-            $this['versionDataForm']->getComponent('ACTIVE')->setDefaultValue('A');
-            $this['versionDataForm']->getComponent('LEVEL')->setDefaultValue('1');;
-            $this['versionDataForm']->getComponent('DESCRIPTION')->setDefaultValue('?');;
-            $this['versionDataForm']->getComponent('CREATED_BY')->setDefaultValue('1');;
-            $this['versionDataForm']->getComponent('CREATED_DATE')->setDefaultValue(date("Y-m-d H:i:s"));
-            $this['versionDataForm']->getComponent('LAST_MODIFIED_BY')->setDefaultValue('1');
-            $this['versionDataForm']->getComponent('LAST_MODIFIED_DATE')->setDefaultValue(date("Y-m-d H:i:s"));
-*/
-            $this['versionDataForm']->setDefaults($data);
+            $this['versionDataForm']->setDefaults([
+              'VERSION_ID'=>$vid,
+              'SYS_ID'=>$sid,
+              //'ACTIVE' => '0',
+              'CREATED_BY' => $this->getUser()->getIdentity()->id,
+              'CREATED_DATE'=>date("Y.m.d"),
+              'LAST_MODIFIED_BY'=> $this->getUser()->getIdentity()->id,
+              'LAST_MODIFIED_DATE'=>date("Y.m.d"),
+            ]);
 
         }
 
     }
 
-    function actionDelete($vid) {
+    function actionDelete($vid, $sid) {
 
         $id = $this->getParameter('id', 0);
         $success =  $this->version->deleteVersionData($id);
@@ -109,7 +126,7 @@ class VersionPresenter extends BasePresenter {
         else {
           $this->flashMessage('Záznam nebyl odstraněn', 'danger');
         }
-        $this->redirect('default', ['id' => $vid] );
+        $this->redirect('default', ['vid' => $vid,'sid' => $sid] );
     }
 
     function renderForm() {
@@ -119,20 +136,21 @@ class VersionPresenter extends BasePresenter {
     public function proceedFormData(UI\Form $versionDataForm) {
 
         $vals = $versionDataForm->getValues();
-
+        $vals['LAST_MODIFIED_BY']=$this->getUser()->getIdentity()->id;
 		try {
-			$this->version->save($vals);
+
+			  $this->version->save($vals);
 
 			//$this->sendConfirmEmail($vals['event_id'], $vals);
 
-            $this->flashMessage('Záznam popisu verze byl uložen', 'success');
+        $this->flashMessage('Záznam popisu verze byl uložen', 'success');
 		}
 		catch (\Exception $e) {
 			$this->flashMessage($e->getMessage(), 'danger');
 		}
       //print_r($vals);
       //$this->redirect('default');
-        $this->redirect('default', ['id' => $vals['VERSION_ID']] );
+        $this->redirect('default', ['vid' => $vals['VERSION_ID'],'sid' => $vals['SYS_ID'] ] );
 
     }
 
