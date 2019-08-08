@@ -52,21 +52,8 @@ class SignPresenter extends BasePresenter {
             $form->addError($e->getMessage());
             $form->addError('The username or password you entered is incorrect.');
         }
-
-//		if ($this->labUser->authorize($values)) {
-//			//ok
-//			$this->flashMessage('Přihlášení proběhlo v pořádku', 'success');
-//			$this->redirect('Homepage:');
-//		}
-//		else {
-//			//chyba
-//			$this->flashMessage('Neplatné přihlašovací jméno, nebo heslo.', 'error');
-//			$this->redirect('in');
-//		}
-
         //$this->flashMessage('Přihlášení proběhlo v pořádku', 'success');
         $this->redirect('Version:');
-
     }
 
     /**

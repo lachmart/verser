@@ -1,43 +1,57 @@
-{*var $versionID = $versionListData['VERSION_ID']*}
-
 {if $id}
-
-    <div class="alert alert-info text-bold" role="alert">
-        Seznam popisů pro verzi:
-    </div>
+    <div class="alert alert-info" style="padding-bottom:8px;">
+        <h4><span class="icon fa fa-file-text"><span>&nbsp;Seznam popisů verzí: {*$versionIdName['NAME']*}</h4>
+    </div>    
 
     <div class="method-list-inner">
-
-        <table class="table method-list">
-            {foreach $versionListData as $vld}
-                <tr>
-                    <td class="bg-info text-bold">
-                       {$vld->LAST_MODIFIED_DATE}
-                    </td>
-                    <td width="120px;">
-                        <a n:href="Version:versionDataForm id=>$vld->ID, vid=>$vld->VERSION_ID" class="text-bold">
-                            <i class="icon fa fa-pencil"> </i>&nbsp;Edit&nbsp;
-                        </a>
-                        <a n:href="Version:delete id=>$vld->ID, vid=>$vld->VERSION_ID" class="text-bold">                            
-                            <i class="icon fa fa-remove"> </i>&nbsp;Delete&nbsp;
-                        </a>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                       {$vld->DESCRIPTION}
-                    </td>
-                </tr>
-            {/foreach}
-        </table>
-
+    {foreach $versionListData as $vld} 
+        {if ($vld->ACTIVE == 'A')}
+            <div style="padding:5px;">
+                <div class="w3-panel-primary">
+                    <h3><span class="icon fa fa-check-square-o"><span>&nbsp;{$vld->TITLE} | {$vld->LAST_MODIFIED_DATE->format('d.m.Y')}</h3>
+                    <hr class="w3-panel-primary-hr">                    
+                </div>                
+                <div class="text-right">
+                    <a n:href="Version:versionDataForm id=>$vld->ID, vid=>$vld->VERSION_ID"  class="btn btn-info btn-sm" role="button">
+                        <i class="icon fa fa-pencil"> </i>&nbsp;Editovat&nbsp;
+                    </a>
+                    <a n:href="Version:delete id=>$vld->ID, vid=>$vld->VERSION_ID"  class="btn btn-danger btn-sm" role="button">                            
+                        <i class="icon fa fa-remove"> </i>&nbsp;Smazat&nbsp;
+                    </a>
+                </div>
+            </div>
+            <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#description-{$iterator->counter}"><span class="icon fa fa-arrows-v"></span>&nbsp;Zobrazit/skrýt obsah popisu tématu</button>
+            <div id="description-{$iterator->counter}" class="collapse">
+                {$vld->DESCRIPTION|noescape}
+            </div>                
+        {else}
+            <!-- div class="w3-block-warning" -->
+            <div style="padding:5px;">
+                <div class="w3-panel-warning">
+                    <h3><span class="icon fa fa-edit"><span>&nbsp;{$vld->TITLE} | {$vld->LAST_MODIFIED_DATE->format('d.m.Y')}</h3>
+                    <hr class="w3-panel-warning-hr">                                    
+                </div>                
+                <div class="text-right">
+                    <a n:href="Version:versionDataForm id=>$vld->ID, vid=>$vld->VERSION_ID"  class="btn btn-info btn-sm" role="button">
+                        <i class="icon fa fa-pencil"> </i>&nbsp;Editovat&nbsp;
+                    </a>
+                    <a n:href="Version:delete id=>$vld->ID, vid=>$vld->VERSION_ID"  class="btn btn-danger btn-sm" role="button">                            
+                        <i class="icon fa fa-remove"> </i>&nbsp;Smazat&nbsp;
+                    </a>
+                </div>
+            </div>
+            <div class="bg-warning">
+                {$vld->DESCRIPTION|noescape}                    
+            </div>            
+        {/if}
+    {/foreach}
     </div>
 {else}
     <div class="alert alert-info">
-
-        Pro zobrazení obsahu popisu veze je nutné zvolit požadavanou verzi systému!!
         <br/><br/>
-        Pokračujte výberem požadované verze v panelu "Seznam dostupných verzí"
+        Pro zobrazení obsahu popisu veze je nutné zvolit požadavanou verzi systému!!
+        <br/>
+        Pokračujte výběrem požadované verze v panelu "Seznam popisů verzí".
+        <br/><br/>
     </div>
 {/if}

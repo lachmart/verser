@@ -23,9 +23,11 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $this->template->selectedMainMenu = null;
         $this->template->selectedSubMenu = null;
         
-        $this->template->editorConfigFileFull = '/inc/ckeditor/fullConfig.js';
+//        $this->template->editorConfigFileFull = '/inc/ckeditor/fullConfig.js';
 //		$this->template->editorConfigFileSimple = '/inc/ckeditor/simpleConfig.js';
-        $this->template->editorConfigFileMini = '/inc/ckeditor/miniConfig.js';
+//        $this->template->editorConfigFileMini = '/inc/ckeditor/miniConfig.js';
+        $this->template->editorConfigFileVerser = 'http://www.i-consult.cz/verser/www/inc/ckeditor/config-verser.js';
+//        $this->template->editorConfigFileVerser = '/inc/ckeditor/config-verser.js';
         
         $this->template->Krecek5Version = $this->config->getParams()['version'];        
         $this->template->projectDomain = $this->config->getParams()['domain'];

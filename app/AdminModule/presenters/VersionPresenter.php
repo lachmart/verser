@@ -10,7 +10,7 @@ use Nette\Forms;
  */
 class VersionPresenter extends BasePresenter {
 
-    /** @var \Lab\Version @inject */
+    /** @var \Version\Version @inject */
     public $version;
 
     function startup() {
@@ -27,15 +27,13 @@ class VersionPresenter extends BasePresenter {
 
         $this->template->h1 = 'Popisy verzí';
 
-        $this->template->versionList = $this->version->getList();
+        $this->template->systemList = $this->version->getListSystem();
+        $this->template->versionList = $this->version->getListVersion();
 
         $id = $this->getParameter('id', 0);
         $this->template->id = $this->version->find($id);
-
-//        echo "VERSION_ID=".$id."<br>";
-
+        $this->template->versionIdName = $this->version->getVersionIdName($id);        
         $this->template->versionListData = $this->version->getListVersionData($id);
-
     }
 
     protected function createComponentVersionDataForm() {
@@ -46,6 +44,7 @@ class VersionPresenter extends BasePresenter {
         $form->addHidden('VERSION_ID');
         $form->addText('ACTIVE', 'Aktivní:');
         $form->addText('LEVEL', 'Úroveň:');
+        $form->addText('TITLE', 'Titulek popisu:');        
         $form->addTextArea('DESCRIPTION', 'Popis verze');
         $form->addText('CREATED_BY', 'Vytvořil:');
         $form->addText('CREATED_DATE', 'Dne:');
@@ -75,7 +74,8 @@ class VersionPresenter extends BasePresenter {
             $this['versionDataForm']->getComponent('ID')->setValue($data->ID);
             $this['versionDataForm']->getComponent('VERSION_ID')->setValue($data->VERSION_ID);
             $this['versionDataForm']->getComponent('ACTIVE')->setValue($data->ACTIVE);
-            $this['versionDataForm']->getComponent('LEVEL')->setValue($data->LEVEL);
+            $this['versionDataForm']->getComponent('LEVEL')->setValue($data->LEVEL);            
+            $this['versionDataForm']->getComponent('TITLE')->setValue($data->TITLE);            
             $this['versionDataForm']->getComponent('DESCRIPTION')->setValue($data->DESCRIPTION);
             $this['versionDataForm']->getComponent('CREATED_BY')->setValue($data->CREATED_BY);
             $this['versionDataForm']->getComponent('CREATED_DATE')->setValue($data->CREATED_DATE);
@@ -103,7 +103,7 @@ class VersionPresenter extends BasePresenter {
     function actionDelete($vid) {
 
         $id = $this->getParameter('id', 0);
-        $success =  $this->version->deleteVersion($id);
+        $success =  $this->version->deleteVersionData($id);
         if ($success)
           $this->flashMessage('Záznam odstraněn', 'success');
         else {
@@ -113,7 +113,7 @@ class VersionPresenter extends BasePresenter {
     }
 
     function renderForm() {
-        $this->template->h1 = 'Editace obsahu verze';
+        $this->template->h1 = 'Editace obsahu popisu verze';
     }
 
     public function proceedFormData(UI\Form $versionDataForm) {

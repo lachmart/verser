@@ -10,45 +10,18 @@ application:
 	mapping:
 		*: Lab\*Module\Presenters\*Presenter
 
-#session:
-#	expiration: 2 days
+session:
+	expiration: 2 days
 
 services:
-	database1:
-			class: Dibi\Connection
-			factory: dibi::connect(%database1%)
-	database2:
-			class: Dibi\Connection
-			factory: dibi::connect(%database2%)
 	- Lab\Forms\FormFactory
 	- Krecek5\Config
-	- Lab\LabUser(@database1)
-#	- Lab\LabMethod
-#	- Lab\Method
-	- Lab\Laboratory(@database1)
-	- Lab\Users\User(@database1)
-#	- Lab\EnumVzpNclp
-#	- Lab\EnumVzpVyk
-#	- Lab\EnumNclp
-#	- Lab\EnumLabmet
-#	- Lab\EnumVzpIvlp
-#	- Lab\EnumVzpZum
-#	- Lab\EnumVzpStomag
-#	- Lab\EnumNclpJedn
-#	- Lab\EnumNclpMaterial
-#	- Lab\EnumNclpNadoby
-#	- Lab\EnumNclpProcedury
-#	- Lab\EnumNclpSyst
-#	- Lab\EnumNclpVysetreni
-#	- Lab\EnumNclpPol
-#	- Lab\EnumNormaly
-#	- Lab\EnumZum
-#	- Lab\EnumZulp
-#	- Lab\Dashboard
-	- Lab\Version(@database2)
-#	- Lab\LinkedMethod
-	authenticator: \Lab\Authenticator(@database1)
-	router: \Lab\RouterFactory::createRouter(@database1)
+	- Lab\LabUser
+	- Lab\Laboratory
+	- Lab\Users\User
+	- Version\Version
+	authenticator: \Lab\Authenticator
+	router: \Lab\RouterFactory::createRouter
 #	database: @dibi
 #	db: \Db
 

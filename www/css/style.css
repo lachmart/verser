@@ -41,13 +41,16 @@ h3 {
 	background-color:#e41e26; 
 }
 .well {
-	background-image:none !important;
-	background-color:#E8E8E8;
-	box-shadow:none;
-	border-radius:0px;
-	border:none;
-	margin-bottom:0px;
+    background-color: #fff;
+    background-image: linear-gradient(#fff, #f2f7f8);
+    box-shadow: none;
+	border-radius: 0px;
+	margin: 0px;
+    border-bottom: #2282be solid 2px;
 }
+
+/************************/
+/** Navigations bars  **/
 nav {
 }
 .navbar-default{

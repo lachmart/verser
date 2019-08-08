@@ -1,125 +1,13 @@
-{* preview of all methods *}
+{* Latte template *}
 
 {block content}
 
-<!-- div class="alert alert-light" -->
-    <div class="well well-sm">
-    
-    	{* //////////////// SEARCH FORM *}
-    	<form action="{link Homepage:default}" method="get">
-    		<div class="row">
-    			<div class="col-sm-3">
-    				<label class="control-label">Název vyšetření</label>
-    				<input id="input-nazev" value="" type="text" name="nazev" class="form-control" />
-    			</div>
-    
-    			<!-- div class="col-sm-3">
-    				<label class="control-label">Pracoviště</label>
-    				<select id="input-lab" name="lab" class="form-control">
-    					{foreach $form_labs as $fl_key=>$fl_value}
-    						<option value="{$fl_key}">{$fl_value}</option>
-    					{/foreach}
-    				</select>
-    			</div -->
-    
-    			<div class="col-sm-3">
-    				<label class="control-label">Biologický materiál</label>
-    				<select id="input-material" name="mat" class="form-control">
-    					<option value="">--- Veškerý materiál ---</option>
-    					{foreach $form_mat as $kv_value}
-    						<option value="{$kv_value['KLIC']}">{$kv_value['N32']} [{$kv_value['KLIC']}]</option>
-    					{/foreach}
-    				</select>
-    			</div>
-    
-    			<div class="col-sm-3">
-    				<label class="control-label">Kategorie vyšetření</label>
-    				<select id="input-kategorie" name="kategorie" class="form-control">
-    					<option value="">--- Všechny kategorie vyšetření ---</option>
-    					{foreach $form_kv as $kv_value}
-    						<option value="{$kv_value['KLIC']}">{$kv_value['N32']} [{$kv_value['KLIC']}]</option>
-    					{/foreach}
-    				</select>
-    			</div>
-    
-    			<div class="col-sm-3">
-    				<br />
-    				<input type="submit" class="btn btn-success" id="filter-btn-submit" value="Vyhledat vyšetření" />
-    				<input type="reset" class="btn btn-success" id="filter-btn-reset" value="Reset" />
-    			</div>
-    
-    		</div>
-    	</form>
-    	{* //////////////// SEARCH FORM *}
-    </div>
-    {*snippet labmet*}
-    <table class="table table-hover dg">
-    	<thead>
-    		<tr>
-    			<!-- th>Laboratoř</th-->
-    			<th width="35%">Laboratorní vyšetření</th>
-    			<th>Materiál</th>
-                <!-- th width="5%">Zkum.</th -->
-    			<th>Odběrová nádobka</th>
-    			<!-- th>Kategorie vyšetření</th -->            
-    			<th width="15%">Režim vyšetření</th>
-    		</tr>
-    	</thead>
-    	<tbody>
-    		{foreach $data as $cnt=>$d}
-    			<tr>
-                    <!--td>{$d['LAB']}</td-->                
-    				<td class="text-nowrap"><a n:href="detail, id=>$d['ID']">{Str::in($d['NAZEV'])}</a></td>
-    				<td>{$d['NCLPMAT']}</td>
-                    <!-- td>{$d['OZNACENI']}</td -->
-    				<td>{$d['NCLPMONP']}</td>
-    				<!-- td>--UNDEFINED--</td -->                
-    				<td class="text-nowrap"></td>
-    			</tr>
-    		{/foreach}
-    	</tbody>
-    </table>
-<!-- /div -->
-
-{*/snippet*}
-<script>
-	jQuery(document).ready(function ()
-	{
-		var table = $('.dg').DataTable({
-			'serverSide': true,
-			'processing': true,
-			'ajax': {
-				'url': {plink Homepage:reloadData},
-				'data': function ( d ) {
-					return $.extend( {}, d, {
-						"lab": $('#input-lab').val(),
-						"nazev": $('#input-nazev').val(),
-						"kategorie": $('#input-kategorie').val(),
-						"material": $('#input-material').val()
-					} );
-				}
-			},
-//			'aaSorting': [[0, 'asc']],
-			"bLengthChange": false,
-			"pageLength": 10,
-			"searching": false,
-			'oLanguage': {'sUrl': '{$basePath|noescape}/js/DataTables/lang/cz.js'},
-			"columns": [
-//				{ data: "LAB"},
-				{ data: "NAZEV"},
-				{ data: "NCLPMAT"},
-//				{ data: "NCLPTK"},
-//				{ data: "OZNACENI"},
-				{ data: "NCLPONP"},                
-				{ data: "STATIM"}
-			],
-            "order": [[ 0, "asc" ]]
-		});
-
-		$('#filter-btn-submit').on("click", function () {
-			table.draw();
-			return false;
-		});
-
-	});
-</script>
+<div class="row">
+	<div class="col-sm-3 clearfix">
+		{include versionList.latte, versionList=>$versionList}
+        {*include versionList.latte*}   		
+	</div>
+	<div class="col-sm-9">
+		{include versionData.latte}
+	</div>
+</div>

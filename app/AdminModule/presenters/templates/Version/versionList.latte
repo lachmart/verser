@@ -1,9 +1,17 @@
-<div class="_method-list-wrapper">
-
-    <div class="method-list-inner">
+    <div class="alert alert-info" style="margin-bottom:0px; padding-bottom:8px;">
+        <h4><span class="icon fa fa-codepen"></span>&nbsp;Popis systému</h4>
+    </div>
+    <select name="linked-methods" id="linked-method-dropdown" class="xhr-linked-methods form-control no-select2">
+        <option value="">--- vyberte ---</option>
+        {foreach $systemList as $sl}
+        <option value="{$sl['ID']}" selected>{$sl['NAME']}</option>
+        {/foreach}
+    </select>
+    <br/>
+    <div class="method-list-inner">        
         <table class="table table-hover method-list">
             <tr>
-                <th colspan="2">Přehled uvolněných verzí</th>
+                <th colspan="2" style="background:#f4f4f4;">Přehled uvolněných verzí:</th>
             </tr>
             {foreach $versionList as $vl} 
                 <tr>
@@ -29,8 +37,6 @@
             {/foreach}
         </table>
     </div>
-
-</div>
 
 <style type="text/css">
     .row-method-selected {

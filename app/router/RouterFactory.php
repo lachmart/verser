@@ -17,17 +17,12 @@ class RouterFactory {
 		$router = new RouteList;
 
 		$admin = new RouteList('Admin');
-//		$admin[] = new Route('admin/<presenter>/<action>[/<id>]', 'Version:default');
 		$admin[] = new Route('admin/<presenter>/<action>[/<id>]', 'Version:default');
 		$admin[] = new Route('admin/<presenter>/<action>[/<id>/<vid>]', 'Version:versionList');                       		
 		$router[] = $admin;
 
 		$public = new RouteList('Front');
-
-		$public[] = new Route('detail/[<id>]', 'Homepage:detail');
-
 		$public[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
-
 		$router[] = $public;
 
 		return $router;

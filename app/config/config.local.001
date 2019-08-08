@@ -1,0 +1,19 @@
+parameters:
+	domain: verser.i-consult.cz
+	customer: i-CONSULT Data s.r.o.
+	licence: --none--
+	adminImg: icdata_logo_30.jpg
+	methodColumns:
+		showStatus: 1
+		showName: 1
+		showLab: 0
+		showUnit: 0
+
+dibi:
+#	host: sql.weby.cz
+	host: localhost
+#	database: iconsultdemkat
+	database: labmet_test
+	username: root
+	password: 
+	lazy: TRUE
