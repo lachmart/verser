@@ -1,2 +1,9 @@
 
 temp/
+# local secrets and data, never commit
+app/config/config.local.neon
+/temp/*
+!/temp/.htaccess
+/log/*
+!/log/.htaccess
+exception*.html
